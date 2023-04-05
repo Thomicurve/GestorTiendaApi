@@ -80,6 +80,8 @@ namespace MiTiendaApi.Services
 
                     _context.Update(entity);
                     await _context.SaveChangesAsync();
+
+                    
                 }
 
                 var productDto = _mapper.Map<Producto, ProductoDto>(entity);

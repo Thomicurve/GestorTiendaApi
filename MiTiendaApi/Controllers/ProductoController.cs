@@ -24,7 +24,8 @@ namespace MiTiendaApi.Controllers
             {
                 var products = await _prodService.GetProducts();
                 return Ok(products);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -37,8 +38,8 @@ namespace MiTiendaApi.Controllers
             try
             {
                 var products = await _prodService.GetOneProduct(productId);
-                if (products == null) 
-                    return NotFound(new {message= "Producto no encontrado."});
+                if (products == null)
+                    return NotFound(new { message = "Producto no encontrado." });
                 else
                     return Ok(products);
             }
@@ -75,6 +76,40 @@ namespace MiTiendaApi.Controllers
             {
                 var newProduct = await _prodService.AddProduct(prodInput);
                 return Ok(newProduct);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(200, Type = typeof(ProductoDto))]
+        public async Task<IActionResult> Put(int id, ProductoInput prodInput)
+        {
+            try
+            {
+                var productUpdated = await _prodService.EditProduct(id,prodInput);
+                if (productUpdated == null) return BadRequest(new { message = "Error inesperado" });
+                return Ok(productUpdated);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(200, Type = typeof(bool))]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var productDeleted = await _prodService.DeleteProduct(id);
+
+                if (!productDeleted) return BadRequest(new { message = "Error inesperado" });
+                return Ok(new { message = "Producto borrado correctamente" });
             }
             catch (Exception ex)
             {
