@@ -77,6 +77,7 @@ namespace MiTiendaApi.Services
                     entity.Nombre = productoInput.Nombre;
                     entity.Precio = productoInput.Precio;
                     entity.ProveedorId = productoInput.ProveedorId;
+                    entity.Stock = productoInput.Stock;
 
                     _context.Update(entity);
                     await _context.SaveChangesAsync();

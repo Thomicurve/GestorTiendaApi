@@ -55,6 +55,9 @@ namespace MiTiendaApi.Data
                         r => r.HasOne<Producto>().WithMany(e => e.ClientesProductos));
             });
 
+            modelBuilder.Entity<ClienteProducto>()
+                .Property(c => c.Cantidad).IsRequired();
+
         }
 
     }
